@@ -15,6 +15,6 @@ with open(fileaddr, 'w+', encoding='utf-8') as f:
 for i in range(2):
     pid = os.fork()
     if pid == 0:
-        os.system('python3 -m http.server 2020')
+        os.system('node index.js')
     else:
         os.system('./ngrok http 2020')
